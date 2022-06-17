@@ -1,0 +1,21 @@
+version: "3.3"
+
+services:
+  nginx:
+    restart: always
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - php
+  php:
+    restart: always
+    container_name: nginx-service
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    expose:
+      - 9000
+
+
