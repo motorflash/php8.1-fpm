@@ -3,6 +3,7 @@ version: "3.3"
 services:
   nginx:
     restart: always
+    container_name: nginx-service
     image: nginx:latest
     ports:
       - "80:80"
@@ -11,7 +12,6 @@ services:
       - php
   php:
     restart: always
-    container_name: nginx-service
     build:
       context: ./
       dockerfile: Dockerfile
