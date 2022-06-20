@@ -17,6 +17,9 @@ deb-src https://deb.nodesource.com/node_10.x stretch main" > /etc/apt/sources.li
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
     && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
 
+# Install Symfony installer
+RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | sudo -E bash
+
 RUN mkdir -p /usr/share/man/man1mkdir -p /usr/share/man/man1
 
 RUN apt-get update && \
@@ -52,6 +55,7 @@ RUN apt-get update && \
         locales \
         openjdk-11-jdk \
         ant \
+        symfony-cli \
         ca-certificates-java && \
     apt-get update
 
