@@ -110,7 +110,11 @@ RUN docker-php-ext-configure gd && \
 RUN pecl install imagick
 RUN pecl install memcached
 RUN yes|CFLAGS="-fgnu89-inline" pecl install memcache
-RUN pecl install xdebug
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug \
+    && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.client_host = host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN pecl install apcu
 
 COPY --from=composer:2.1.3 /usr/bin/composer /usr/local/bin/composer
