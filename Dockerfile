@@ -112,9 +112,11 @@ RUN pecl install memcached
 RUN yes|CFLAGS="-fgnu89-inline" pecl install memcache
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug \
-    && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && echo "xdebug.client_host = host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    && echo "#xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.client_host=127.17.0.1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.idekey=vscode" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.discover_client_host=true" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN pecl install apcu
 
 COPY --from=composer:2.1.3 /usr/bin/composer /usr/local/bin/composer
